@@ -4,7 +4,7 @@
 # ==============================================================================
 VERSION=$(bashio::config 'version')
 
-CMD_OPTIONS=("--disable-pip-version-check" "--find-links" "${WHEELS_LINKS}")
+CMD_OPTIONS=("--disable-pip-version-check" "--find-links" "${WHEELS_LINKS}" "multidict==6.0.2")
 
 # Generate install string
 if [[ "${VERSION}" =~ latest|stable ]]; then
@@ -44,6 +44,7 @@ if ! hass -c /tmp/config --script check_config > /share/check_config.txt; then
     bashio::log.error "See the output below for more details."
 
     grep -v homeassistant.util.package /share/check_config.txt | head -n 15
+    less /share/check_config.txt
 
     bashio::log.info "The full output has been written to /share/check_config.txt"
     bashio::exit.nok
